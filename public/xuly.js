@@ -1,4 +1,4 @@
-var socket = io("http://localhost:3000")
+var socket = io("https://mini-heroku.herokuapp.com")
 
 socket.on("server-gui-ds", function(data){
   $("#ds").html("")
