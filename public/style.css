@@ -1,0 +1,31 @@
+#wrapper {
+  width: 400px;
+  margin: auto;
+}
+
+#information {
+  border: solid 1px gray;
+  margin 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+#txtHoTen, #txtEmail, #txtSoDT {
+  width: 100%;
+  display: block;
+}
+
+#btnRegister {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.hocvien {
+  border-bottom: solid 1px #eaeff7;
+  padding: 10px;
+}
+
+span{
+  color: blue;
+  font-weight: bold;
+}
