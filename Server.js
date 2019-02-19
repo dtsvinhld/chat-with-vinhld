@@ -9,16 +9,59 @@ var server = require("http").Server(app)
 var io = require("socket.io")(server)
 server.listen(process.env.PORT || 3000)
 
-var mang = []
+var users
+var messages = []
+var fs = require("fs")
+fs.readFile('Users', 'utf8', function(err, data) {
+  users = JSON.parse(data)
+});
+fs.readFile('Messages', 'utf8', function(err, data) {
+  if (err == null) {
+    messages = JSON.parse(data)
+  }
+});
+
 io.on("connection", function(socket){
-  console.log(socket.id + " is connected!")
 
-  socket.on("hocvien-gui-thongtin", function(data){
+  socket.emit("update-messages", messages)
 
-    mang.push(new HocVien(data.id, data.hoten, data.email, data.dienthoai))
+  socket.on("login", function(data) {
+    var login = false
+    var userLogin
+    users.map(function(user){
+      if (user.username == data.username && user.password == data.password) {
+        login = true
+        userLogin = user
+        break
+      }
+    })
+    socket.emit("did-login", {
+      status: login,
+      user: userLogin
+    })
+  })
 
-    io.sockets.emit("server-gui-ds", mang)
+  socket.on("changepassword", function(data) {
+    var change = false
+    users.forEach(function(item, index, array) {
+      if (item.username == data.username) {
+        if (item.password == data.password) {
+          item.password = data.newpassword
+          users[index] = item
+          change = true
+          fs.writeFile("Users", JSON.stringify(users), function(error) {})
+        }
+      }
+    })
+    socket.emit("did-changepassword", {
+      status: change
+    })
+  })
 
+  socket.on("send-message", function(data) {
+    messages.push(new Message(data.name, data.content, data.time))
+    io.sockets.emit("update-messages", messages)
+    fs.writeFile("Messages", JSON.stringify(messages), function(error) {})
   })
 
 })
@@ -28,10 +71,29 @@ app.get("/", function(req, res) {
   res.render("home")
 })
 
+app.get("/login", function(req, res) {
+  res.render("login")
+})
 
-function HocVien(id, hoten, email, sodt) {
-  this.id = id
-  this.hoten = hoten
-  this.email = email
-  this.sodt = sodt
+app.get("/logout", function(req, res) {
+  res.render("logout")
+})
+
+app.get("/changepassword", function(req, res) {
+  res.render("changepassword")
+})
+
+app.get("*", function(req, res) {
+  res.render("notfound")
+})
+
+function Message(name, content, time) {
+  this.name = name
+  this.content = content
+  this.time = time
+}
+
+function User(username, password) {
+  this.username = username
+  this.password = password
 }
