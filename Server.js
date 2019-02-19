@@ -26,7 +26,6 @@ io.on("connection", function(socket){
   socket.emit("update-messages", messages)
 
   socket.on("login", function(data) {
-    console.log(JSON.stringify(data));
     var login = false
     var userLogin
     users.map(function(user){
