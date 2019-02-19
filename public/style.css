@@ -41,10 +41,8 @@ body {
   left: 10%;
   top: 0;
   width: 80%;
-  min-height: 100%;
   background-color: white;
   padding: 10px;
-  overflow-y: scroll;
 }
 
 #input-send-message {
@@ -71,7 +69,10 @@ body {
 }
 
 #list-messages {
+  width: 100%;
+  max-height: 500px;
   font-size: 13px;
+  overflow-y: scroll;
 }
 
 .message-content {
