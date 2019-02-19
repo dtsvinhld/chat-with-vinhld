@@ -17,7 +17,9 @@ fs.readFile('Users', 'utf8', function(err, data) {
 });
 fs.readFile('Messages', 'utf8', function(err, data) {
   if (err == null) {
-    messages = JSON.parse(data)
+    if (data) {
+      messages = JSON.parse(data)
+    }
   }
 });
 
