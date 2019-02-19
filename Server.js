@@ -26,13 +26,13 @@ io.on("connection", function(socket){
   socket.emit("update-messages", messages)
 
   socket.on("login", function(data) {
+    console.log(JSON.stringify(data));
     var login = false
     var userLogin
     users.map(function(user){
       if (user.username == data.username && user.password == data.password) {
         login = true
         userLogin = user
-        break
       }
     })
     socket.emit("did-login", {

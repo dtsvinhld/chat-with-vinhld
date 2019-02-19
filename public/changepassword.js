@@ -3,7 +3,7 @@ if (typeof(Storage) !== 'undefined') {
   if (localStorage.username == undefined) {
     window.location.replace("/login")
   } else {
-    var socket = io("https://chat-with-vinhld.herokuapp.com")
+    var socket = io(hostname)
 
     socket.on("did-changepassword", function(data) {
       if (data.status) {

@@ -3,9 +3,10 @@ if (typeof(Storage) !== 'undefined') {
   if (localStorage.username != undefined) {
     window.location.replace("/")
   } else {
-    var socket = io("https://chat-with-vinhld.herokuapp.com")
+    var socket = io(hostname)
 
     socket.on("did-login", function(data) {
+      alert(JSON.stringify(data))
       if (data.status) {
         localStorage.setItem('username', data.user.username)
         localStorage.setItem('displayname', data.user.displayname)

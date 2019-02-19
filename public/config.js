@@ -1,1 +1,1 @@
-const hostname = "https://chat-with-vinhld.herokuapp.com"
+const hostname = "https://chat-with-vinhld.herokuapp.com/"
