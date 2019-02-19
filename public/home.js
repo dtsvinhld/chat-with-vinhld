@@ -2,7 +2,7 @@ if (typeof(Storage) !== 'undefined') {
 
   if (localStorage.username != undefined) {
 
-    var socket = io(hostname)
+    var socket = io("https://chat-with-vinhld.herokuapp.com")
 
     socket.on("update-messages", function(data){
       var content = ""
